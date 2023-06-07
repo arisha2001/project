@@ -6,8 +6,8 @@ import os
 from os import path
 
 
-bucket_name = 'bigdata-winter2022'
-project_name = 'gd-sar-stpractice'
+bucket_name = '***'
+project_name = '***'
 
 
 def connection(host):
