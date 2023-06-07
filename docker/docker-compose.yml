@@ -1,0 +1,105 @@
+version: "3.8"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=elastic-docker-cluster
+      - node.master=true
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.type=PKCS12
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.keystore.path=cert/elastic-stack-ca.p12
+      - xpack.security.transport.ssl.truststore.path=cert/elastic-stack-ca.p12
+      - xpack.security.transport.ssl.truststore.type=PKCS12
+    volumes:
+      - ./cert_dir:/usr/share/elasticsearch/config/cert/
+    ports:
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.0
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
+    ports:
+      - 5601:5601
+    depends_on:
+      - "elasticsearch"
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+  postgres:
+    image: postgres:13
+    volumes:
+      - ./var/run/docker.sock:/var/run/docker.sock
+      - ./PostgresData:/var/postgresql@13/data
+      - ./PostgresLogs:/var/postgresql@13/logs
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - 5432:5432
+    networks:
+      - airflow
+  scheduler:
+    image: apache/airflow
+    command: scheduler
+    env_file:
+      - .env
+    depends_on:
+      initdb:
+        condition: service_completed_successfully
+    volumes:
+      - ./var/run/docker.sock:/var/run/docker.sock
+      - ../airflow/dags:/opt/airflow/dags
+      - ../airflow/logs:/opt/airflow/logs
+      - ../dataset/history:/opt/airflow/dataset/history
+    networks:
+      - airflow
+  webserver:
+    image: apache/airflow
+    depends_on:
+      - postgres
+      - initdb
+    env_file:
+      - .env
+    command: webserver
+    volumes:
+      - ./var/run/docker.sock:/var/run/docker.sock
+      - ./scripts:/opt/airflow/scripts
+      - ../airflow/dags:/opt/airflow/dags
+      - ../airflow/logs:/opt/airflow/logs
+      - ../dataset/history:/opt/airflow/dataset/history
+    ports:
+      - 8080:8080
+    networks:
+      - airflow
+  initdb:
+    image: apache/airflow
+    entrypoint: /bin/bash
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - ./var/run/docker.sock:/var/run/docker.sock
+      - ./scripts:/opt/airflow/scripts
+      - ../airflow/dags:/opt/airflow/dags
+      - ../airflow/logs:/opt/airflow/logs
+      - ../dataset/history:/opt/airflow/dataset/history
+    command: -c
+      'airflow db init && airflow users create --username "${_AIRFLOW_WWW_USER_USERNAME}"
+      --password "${_AIRFLOW_WWW_USER_PASSWORD}" --firstname user --lastname useruser
+      --role Admin --email airflow-user@gmail.com'
+    networks:
+      - airflow
+networks:
+  airflow:
+    driver: bridge

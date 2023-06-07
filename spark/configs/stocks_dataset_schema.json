@@ -1,0 +1,12 @@
+{
+  "type": "struct", "fields": [
+    {"name": "Ticker", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "Date", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "Adj Close", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "Close", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "High", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "Low", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "Open", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "Volume", "type": "float", "nullable": true, "metadata": {}}
+  ]
+}

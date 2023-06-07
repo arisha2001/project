@@ -1,0 +1,19 @@
+{
+  "type": "struct", "fields": [
+    {"name": "submission_date", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "state", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "tot_cases", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "conf_cases", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "prob_cases", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "new_case", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "pnew_case", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "tot_death", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "conf_death", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "prob_death", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "new_death", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "pnew_death", "type": "float", "nullable": true, "metadata": {}},
+    {"name": "created_at", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "consent_cases", "type": "string", "nullable": true, "metadata": {}},
+    {"name": "consent_deaths", "type": "string", "nullable": true, "metadata": {}}
+  ]
+}

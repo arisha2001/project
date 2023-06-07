@@ -1,0 +1,45 @@
+{
+  "etfs" : {
+    "settings" : {
+      "number_of_shards" : 1,
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "_doc" : {
+        "properties": {
+          "date": {
+            "type": "date",
+            "format": "yyyy-MM-dd"
+          },
+          "ticker": {
+            "type": "keyword"
+          },
+          "open": {
+            "type": "scaled_float",
+            "scaling_factor": 16
+          },
+          "high": {
+            "type": "scaled_float",
+            "scaling_factor": 16
+          },
+          "low": {
+            "type": "scaled_float",
+            "scaling_factor": 16
+          },
+          "close": {
+            "type": "scaled_float",
+            "scaling_factor": 16
+          },
+          "adj_close": {
+            "type": "scaled_float",
+            "scaling_factor": 16
+          },
+          "volume": {
+            "type": "scaled_float",
+            "scaling_factor": 13
+          }
+        }
+      }
+    }
+  }
+}

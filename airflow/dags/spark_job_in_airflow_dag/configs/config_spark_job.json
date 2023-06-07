@@ -1,0 +1,26 @@
+{
+  "dag": {
+    "DAG_NAME": "spark_job"
+  },
+  "CLUSTER_CONFIG": {
+    "endpoint_config": {
+      "enable_http_port_access": true
+    },
+    "gce_cluster_config": {
+      "service_account": "bd-dataproc-admin@gd-sar-stpractice.iam.gserviceaccount.com"
+    },
+    "master_config": {
+      "num_instances": 1,
+      "machine_type_uri": "e2-standard-2"
+    },
+    "worker_config": {
+      "num_instances": 2,
+      "machine_type_uri": "e2-standard-2"
+    }
+  },
+  "GCP_CONFIG": {
+    "GCP_PROJECT": "gd-sar-stpractice",
+    "GCP_REGION": "us-central1",
+    "GCP_BUCKET": "bigdata-winter2022"
+  }
+}

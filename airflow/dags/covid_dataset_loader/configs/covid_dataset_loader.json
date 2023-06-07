@@ -1,0 +1,11 @@
+{
+  "dag": {
+    "owner": "gd-practice",
+    "email": "monastyrskayaao@gmail.com",
+    "retries": 1,
+    "retry_delay": 5
+  },
+  "arguments": {
+    "dataset_id": "9mfq-cb36"
+  }
+}

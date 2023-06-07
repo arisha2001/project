@@ -1,0 +1,14 @@
+{
+  "dag": {
+    "owner": "gd-practice",
+    "email": "rushakurbanova1@gmail.com",
+    "retries": 1,
+    "retry_delay": 5
+  },
+
+  "arguments": {
+    "period": "2y",
+    "interval": "1d",
+    "stocks_symbols_api_url": "http://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt"
+  }
+}
